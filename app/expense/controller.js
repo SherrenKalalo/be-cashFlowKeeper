@@ -193,8 +193,65 @@ const getExpense = async (req, res) => {
   }
 };
 
+const updateExpense = async (req, res) => {
+  try {
+    // ambil id_expense dari req.params
+    const { id_expense } = req.params;
+
+    // make sure id_expense ada
+    const existingExpense = await prisma.expense.findFirst({
+      where: {
+        id: id_expense,
+      },
+    });
+    if (!existingExpense) {
+      throw new NotFoundError("Expense tidak ditemukan");
+    }
+
+    // validasi req.body
+    const validationResult = expenseSchema.validate(req.body);
+    if (validationResult.error) {
+      // lempar error InvariantError
+      throw new InvariantError(validationResult.error.message);
+    }
+
+    // update expense di database
+    const updatedExpense = await prisma.expense.update({
+      where: {
+        id: id_expense,
+      },
+      data: {
+        name: req.body.name,
+        amount: req.body.amount,
+      },
+    });
+
+    // kembalikan respon kepada user
+    return res.status(200).json({
+      status: "success",
+      message: `Berhasil update data expense ${existingExpense.name}`,
+      data: {
+        expense: updatedExpense,
+      },
+    });
+  } catch (error) {
+    if (error.statusCode) {
+      return res.status(error.statusCode).json({
+        status: "fail",
+        message: error.message,
+      });
+    } else {
+      return res.status(500).json({
+        status: "fail",
+        message: "Error pada server",
+      });
+    }
+  }
+};
+
 module.exports = {
   createExpense,
   deleteExpenseById,
   getExpense,
+  updateExpense,
 };

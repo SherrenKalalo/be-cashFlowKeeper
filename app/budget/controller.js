@@ -14,7 +14,7 @@ const createBudget = async (req, res) => {
 
     // id_user nanti ambe dari req.user dari token
 
-    // insert cudget ke database
+    // insert budget ke database
     const budget = await prisma.budget.create({
       data: {
         id_user: req.user.id,
@@ -22,6 +22,7 @@ const createBudget = async (req, res) => {
         spent: 0,
         remaining: req.body.amount,
         amount: req.body.amount,
+        color: req.body.color,
       },
     });
 

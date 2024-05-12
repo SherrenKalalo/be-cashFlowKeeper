@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const cors = require("cors");
 
 const indexRouter = require("./app/index/router");
 const authenticationRouter = require("./app/authentication/router");
@@ -10,6 +11,20 @@ const budgetRouter = require("./app/budget/router");
 const expenseRouter = require("./app/expense/router");
 
 const app = express();
+
+const allowedOrigins = ["http://localhost:5173"];
+// Middleware CORS untuk mengizinkan asal yang diizinkan
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Izinkan asal yang diizinkan
+      } else {
+        callback(new Error("Origin not allowed by CORS")); // Tolak asal yang tidak diizinkan
+      }
+    },
+  })
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

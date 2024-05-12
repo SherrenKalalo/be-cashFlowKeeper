@@ -31,6 +31,7 @@ model Budget {
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
   Expenses Expense[]
+   color String
 }
 
 model Expense {

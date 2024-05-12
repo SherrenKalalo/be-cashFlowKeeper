@@ -38,7 +38,7 @@ const register = async (req, res) => {
     // kembalikan respon ke user
     return res.status(201).json({
       status: "success",
-      message: "Berhasil Registrasi Akun Peminjam",
+      message: "Berhasil Registrasi Akun",
       data: {
         id: user.id,
         username: user.username,
@@ -86,7 +86,7 @@ const login = async (req, res) => {
     );
 
     if (!matchPassword) {
-      throw new InvariantError("Username of Password Incorrect");
+      throw new InvariantError("Username or Password Incorrect");
     }
 
     // generate token
