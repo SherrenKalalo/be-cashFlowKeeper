@@ -12,17 +12,23 @@ const expenseRouter = require("./app/expense/router");
 
 const app = express();
 
-const allowedOrigins = ["*"];
-// Middleware CORS untuk mengizinkan asal yang diizinkan
+// const allowedOrigins = ["*"];
+// // Middleware CORS untuk mengizinkan asal yang diizinkan
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true); // Izinkan asal yang diizinkan
+//       } else {
+//         callback(new Error("Origin not allowed by CORS")); // Tolak asal yang tidak diizinkan
+//       }
+//     },
+//   })
+// );
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true); // Izinkan asal yang diizinkan
-      } else {
-        callback(new Error("Origin not allowed by CORS")); // Tolak asal yang tidak diizinkan
-      }
-    },
+    origin: "*",
   })
 );
 
