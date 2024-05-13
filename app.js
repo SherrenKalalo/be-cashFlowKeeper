@@ -12,7 +12,7 @@ const expenseRouter = require("./app/expense/router");
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["*"];
 // Middleware CORS untuk mengizinkan asal yang diizinkan
 app.use(
   cors({
